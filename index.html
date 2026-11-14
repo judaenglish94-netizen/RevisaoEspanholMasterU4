@@ -253,8 +253,11 @@
       </div>
     </section>
 
-    <!-- Menu de Navegação das Questões -->
-    <nav id="question-nav" class="hidden flex flex-wrap items-center justify-center gap-1 mb-4 pb-3 border-b border-slate-700/60" aria-label="Navegação das questões"></nav>
+    <!-- Menu de Navegação das Questões por Tópicos -->
+    <nav id="question-nav" class="hidden flex flex-col gap-2 mb-4 pb-3 border-b border-slate-700/60" aria-label="Navegação das questões por tópicos">
+      <div id="topic-tabs" class="flex flex-wrap items-center justify-center gap-1.5"></div>
+      <div id="topic-questions" class="flex flex-wrap items-center justify-center gap-1.5"></div>
+    </nav>
 
     <!-- Área Dinâmica da Questão -->
     <section id="quiz-container" class="hidden flex-1 flex flex-col justify-between gap-4">
@@ -826,42 +829,42 @@
       // ================= BLOCO 5: GRAMÁTICA (41 - 55) =================
       {
         block: "Gramática",
-        question: "41. Marca la opción en la que el uso de <u>hacia</u> o <u>hasta</u> es CORRECTO:",
+        question: "41. Marca la opción en la que el uso de <u>hacia</u> y <u>hasta</u> es CORRECTO:",
         options: [
-          "a. No sé a qué hora termina la fiesta, pero creo que terminará hasta las nueve.",
-          "b. El tren va de Madrid hacia Barcelona, donde es su parada final.",
+          "a. No sé a qué hora termina la fiesta, pero creo que terminará hasta las nueve y caminaremos hacia casa.",
+          "b. El tren va de Madrid hacia Barcelona como límite final, y saldrá hasta las cinco aproximadamente.",
           "c. Fue en bicicleta hacia Madrid y el juego durará hasta las diez.",
-          "d. El amor de Fidel hasta su madre es impresionante.",
-          "e. Llevó a todo el mundo, hacia el perro."
+          "d. El amor de Fidel hasta su madre es grande, y viajó hacia Cataluña como destino final.",
+          "e. Llevó a todo el mundo, hacia el perro, y miró hasta el horizonte."
         ],
         correct: 2,
-        feedback: "Correto! Letra <strong>c</strong>. Usa-se <strong>hacia</strong> para direção ou tempo aproximado, e <strong>hasta</strong> para limite determinado (<em>hasta las diez</em>)."
+        feedback: "Correto! Letra <strong>c</strong>. Usa-se <strong>hacia</strong> para direção (<em>hacia Madrid</em>) e <strong>hasta</strong> para limite determinado de tempo (<em>hasta las diez</em>)."
       },
       {
         block: "Gramática",
-        question: "42. Elige la alternativa donde la palabra <u>hacia</u> (preposición) o <u>hacía</u> (verbo) está empleada correctamente:",
+        question: "42. Elige la alternativa donde las palabras <u>hacia</u> (preposición) y <u>hacía</u> (verbo) están empleadas correctamente:",
         options: [
-          "a. Ayer él hacia todos sus deberes en la oficina.",
-          "b. Caminamos hacía la estación de trenes.",
-          "c. El funicular va hacia Cataluña como límite final.",
+          "a. Ayer él hacia todos sus deberes mientras caminaba hacía la oficina.",
+          "b. Caminamos hacía la estación de trenes porque hacia mucho frío.",
+          "c. El funicular va hacia Cataluña como límite final y hacia mucho ruido.",
           "d. Cuando era niño, yo hacía muchas preguntas y caminaba hacia la escuela.",
-          "e. Hacía las cinco de la tarde llegará el avión."
+          "e. Hacía las cinco de la tarde llegará el avión que hacia escala en Madrid."
         ],
         correct: 3,
         feedback: "Correto! Letra <strong>d</strong>. <strong>Hacía</strong> (com acento) é o verbo <em>hacer</em> no pretérito imperfecto; <strong>hacia</strong> (sem acento) é a preposição de direção."
       },
       {
         block: "Gramática",
-        question: "43. Señala la frase que utiliza <u>hasta</u> con idea de inclusión:",
+        question: "43. Señala la frase que utiliza <u>hasta</u> con idea de inclusión y <u>hacia</u> con idea de tiempo aproximado:",
         options: [
-          "a. Invitó a todos sus amigos, hasta a su vecino nuevo.",
-          "b. Caminó hasta la esquina y regresó.",
-          "c. El examen durará hasta el mediodía.",
-          "d. Miró hacia el cielo despejado.",
-          "e. Llegaremos hacia las ocho de la noche."
+          "a. Invitó a todos sus amigos, hasta a su vecino nuevo, y la fiesta terminará hacia las nueve.",
+          "b. Caminó hasta la esquina y regresó hasta el mediodía.",
+          "c. El examen durará hasta el mediodía y miró hasta el cielo.",
+          "d. Miró hacia el cielo despejado y caminó hacia la plaza.",
+          "e. Llegaremos hacia las ocho de la noche y saldremos hacia las diez."
         ],
         correct: 0,
-        feedback: "Correto! Letra <strong>a</strong>. <strong>Hasta</strong> também transmite ideia de inclusão (= <em>incluso</em>): <em>hasta a su vecino nuevo</em>."
+        feedback: "Correto! Letra <strong>a</strong>. <strong>Hasta</strong> transmite ideia de inclusão (= <em>incluso</em>: <em>hasta a su vecino nuevo</em>) e <strong>hacia</strong> indica hora aproximada (<em>hacia las nueve</em>)."
       },
       {
         block: "Gramática",
@@ -943,16 +946,16 @@
       },
       {
         block: "Gramática",
-        question: "50. En cuál de las opciones el pronombre está correctamente posicionado con un verbo en gerundio o infinitivo:",
+        question: "50. En cuál de las opciones el pronombre está correctamente posicionado con un verbo en gerundio e infinitivo:",
         options: [
-          "a. Te siguiendo llegaré temprano.",
-          "b. La escuchar no me hace bien.",
+          "a. Te siguiendo llegaré temprano y la escuchar me ayuda.",
+          "b. La escuchar no me hace bien y te seguir es fácil.",
           "c. Tráigame un té y sigues te.",
-          "d. Siguiéndote llegaré temprano.",
-          "e. Me la tráiga por favor."
+          "d. Siguiéndote llegaré temprano y escucharte me hace bien.",
+          "e. Me la tráiga por favor y la comprar quiero."
         ],
         correct: 3,
-        feedback: "Correto! Letra <strong>d</strong>. Com gerúndio (e infinitivo), o pronome vai depois e soldado ao verbo: <strong>Siguiéndote</strong>."
+        feedback: "Correto! Letra <strong>d</strong>. Tanto com gerúndio (<strong>Siguiéndote</strong>) quanto com infinitivo (<strong>escucharte</strong>), o pronome vai depois e soldado ao verbo."
       },
       {
         block: "Gramática",
@@ -962,7 +965,7 @@
           "b. Me la compré ayer.",
           "c. Cómpralame ahora.",
           "d. Lo te dije anoche.",
-          "e. Nos la diste ayer? (sin signo inicial) -> La nos diste."
+          "e. La nos diste ayer."
         ],
         correct: 1,
         feedback: "Correto! Letra <strong>b</strong>. O complemento indireto (<strong>me</strong>) vem sempre antes do complemento direto (<strong>la</strong>): <strong>Me la compré</strong>."
@@ -1021,6 +1024,14 @@
       }
     ];
 
+    const topics = [
+      { id: "hotel", label: "El hotel", blockName: "Vocabulario: El hotel" },
+      { id: "oficina", label: "La oficina", blockName: "Vocabulario: La oficina" },
+      { id: "boda", label: "La boda", blockName: "Vocabulario: La boda" },
+      { id: "clima", label: "El clima", blockName: "Vocabulario: El clima" },
+      { id: "gramatica", label: "Gramática", blockName: "Gramática" }
+    ];
+
     let currentIndex = 0;
     let userSelections = Array(questions.length).fill(null);
     let checkedQuestions = Array(questions.length).fill(false);
@@ -1030,6 +1041,8 @@
     const quizBadges = document.getElementById("quiz-badges");
     const blockBadge = document.getElementById("block-badge");
     const questionNav = document.getElementById("question-nav");
+    const topicTabs = document.getElementById("topic-tabs");
+    const topicQuestions = document.getElementById("topic-questions");
     const questionArea = document.getElementById("question-area");
     const feedbackBox = document.getElementById("feedback-box");
     const prevBtn = document.getElementById("prev-btn");
@@ -1067,8 +1080,42 @@
     }
 
     function renderNav() {
-      questionNav.innerHTML = "";
-      questions.forEach((_, idx) => {
+      const currentBlock = questions[currentIndex].block;
+      topicTabs.innerHTML = "";
+      topicQuestions.innerHTML = "";
+
+      // Renderiza abas dos tópicos
+      topics.forEach((topic) => {
+        const topicIndices = questions
+          .map((q, idx) => (q.block === topic.blockName ? idx : -1))
+          .filter((idx) => idx !== -1);
+
+        const firstIdx = topicIndices[0];
+        const lastIdx = topicIndices[topicIndices.length - 1];
+        const isActiveTopic = topic.blockName === currentBlock;
+
+        const tabBtn = document.createElement("button");
+        tabBtn.textContent = `${topic.label} (${firstIdx + 1}-${lastIdx + 1})`;
+        tabBtn.onclick = () => {
+          currentIndex = firstIdx;
+          renderQuestion();
+        };
+
+        let tabClasses = "px-2.5 py-1 rounded-full text-xs font-bold border transition cursor-pointer ";
+        if (isActiveTopic) {
+          tabClasses += "bg-[#0284c7] text-white border-white shadow ";
+        } else {
+          tabClasses += "bg-slate-800/80 text-[#94a3b8] border-slate-600 hover:border-[#38bdf8] hover:text-white ";
+        }
+
+        tabBtn.className = tabClasses;
+        topicTabs.appendChild(tabBtn);
+      });
+
+      // Renderiza apenas as questões pertencentes ao tópico ativo
+      questions.forEach((q, idx) => {
+        if (q.block !== currentBlock) return;
+
         const btn = document.createElement("button");
         btn.textContent = idx + 1;
         btn.onclick = () => {
@@ -1076,7 +1123,7 @@
           renderQuestion();
         };
 
-        let classes = "w-6 h-6 rounded-full text-[11px] font-bold border transition cursor-pointer flex items-center justify-center ";
+        let classes = "w-7 h-7 rounded-full text-xs font-bold border transition cursor-pointer flex items-center justify-center ";
 
         if (idx === currentIndex) {
           classes += "bg-[#38bdf8] text-slate-950 border-white scale-110 shadow ";
@@ -1093,7 +1140,7 @@
         }
 
         btn.className = classes;
-        questionNav.appendChild(btn);
+        topicQuestions.appendChild(btn);
       });
     }
 
