@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz de Español - 8º Ano</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --space-blue: #0284c7;
+      --space-light: #38bdf8;
+      --text-main: #f8f9fa;
+      --text-secondary: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Nunito', sans-serif;
+      color: var(--text-main);
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Efeito de estrelas sutis */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.5;
+      background-image:
+        radial-gradient(2px 2px at 12% 18%, #ffffff, transparent),
+        radial-gradient(1.5px 1.5px at 28% 72%, #ffffff, transparent),
+        radial-gradient(2px 2px at 45% 25%, #ffffff, transparent),
+        radial-gradient(1px 1px at 62% 84%, #ffffff, transparent),
+        radial-gradient(2px 2px at 78% 15%, #ffffff, transparent),
+        radial-gradient(1.5px 1.5px at 88% 58%, #ffffff, transparent),
+        radial-gradient(1px 1px at 18% 48%, #ffffff, transparent),
+        radial-gradient(2px 2px at 54% 62%, #ffffff, transparent),
+        radial-gradient(1.5px 1.5px at 92% 30%, #ffffff, transparent),
+        radial-gradient(1px 1px at 36% 90%, #ffffff, transparent);
+      z-index: 0;
+    }
+
+    h1, h2, h3, .font-title {
+      font-family: 'Fredoka', sans-serif;
+    }
+
+    /* Logo no Topo */
+    .top-logo {
+      position: relative;
+      z-index: 1;
+      max-width: 202px;
+      width: 100%;
+      height: auto;
+      margin-bottom: 14px;
+      filter: drop-shadow(0 6px 15px rgba(0, 0, 0, 0.7));
+      -webkit-mask-image: radial-gradient(ellipse at center, black 48%, transparent 74%);
+      mask-image: radial-gradient(ellipse at center, black 48%, transparent 74%);
+    }
+
+    /* Container Principal */
+    .main-card {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 750px;
+      height: 76vh;
+      min-height: 480px;
+      background: rgba(13, 27, 42, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 3px solid rgba(255, 255, 255, 0.85);
+      border-radius: 20px;
+      padding: 24px 28px;
+      overflow-y: auto;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Barra de rolagem interna customizada */
+    .main-card::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .main-card::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 10px;
+    }
+
+    .main-card::-webkit-scrollbar-thumb {
+      background: #0284c7;
+      border-radius: 10px;
+    }
+
+    .main-card::-webkit-scrollbar-thumb:hover {
+      background: #38bdf8;
+    }
+
+    .option-btn {
+      transition: all 0.2s ease;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+      border-color: #38bdf8;
+      background-color: rgba(2, 132, 199, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Logo no Topo -->
+  <img src="judalogo.png" alt="Logo Judá" class="top-logo" />
+
+  <!-- Container Principal -->
+  <main class="main-card flex flex-col justify-between">
+    <!-- Cabeçalho -->
+    <header class="border-b border-slate-700/80 pb-3 mb-3 flex flex-wrap items-center justify-between gap-2">
+      <div>
+        <h1 class="text-xl sm:text-2xl font-bold text-[#38bdf8] tracking-wide">
+          Quiz de Español — 8º Ano
+        </h1>
+        <p class="text-xs sm:text-sm text-[#94a3b8]">
+          Léxico (Hotel, Oficina, Boda, Clima) &amp; Gramática
+        </p>
+      </div>
+      <div id="quiz-badges" class="hidden flex items-center gap-2 flex-wrap">
+        <span id="block-badge" class="px-3 py-1 text-xs font-bold rounded-full bg-slate-800 border border-[#38bdf8]/60 text-[#38bdf8]">
+          Bloco
+        </span>
+        <span id="progress-badge" class="px-3 py-1 text-xs sm:text-sm font-bold rounded-full bg-[#0284c7]/30 border border-[#38bdf8] text-[#f8f9fa]">
+          1 / 55
+        </span>
+        <span id="score-badge" class="px-3 py-1 text-xs sm:text-sm font-bold rounded-full bg-slate-800 border border-white/40 text-[#38bdf8]">
+          Nota: 0.0 / 10
+        </span>
+      </div>
+    </header>
+
+    <!-- Página Inicial: Resumo -->
+    <section id="intro-screen" class="flex-1 flex flex-col justify-between gap-4">
+      <div class="space-y-4 text-sm sm:text-base">
+        <p class="text-[#94a3b8]">
+          Revise o vocabulário (definições em espanhol) e a gramática antes de iniciar o simulado (55 questões — vale 10,0 pontos):
+        </p>
+
+        <!-- LÉXICO -->
+        <div class="space-y-3">
+          <h2 class="text-lg font-bold text-[#38bdf8] border-b border-slate-700 pb-1">LÉXICO (Definiciones en español)</h2>
+
+          <div class="bg-slate-900/70 border border-[#38bdf8]/40 rounded-2xl p-3.5 space-y-1 text-xs sm:text-sm">
+            <h3 class="text-sm sm:text-base font-bold text-[#38bdf8]">1. El hotel</h3>
+            <p><strong>Recepción:</strong> lugar donde los huéspedes hacen el registro al llegar al hotel.</p>
+            <p><strong>Mostrador:</strong> mesa larga en la recepción donde atiende el recepcionista.</p>
+            <p><strong>Botones:</strong> empleado encargado de llevar el equipaje de los clientes.</p>
+            <p><strong>Conserje:</strong> persona que atiende la portería, da informaciones y entrega llaves.</p>
+            <p><strong>Camarera:</strong> empleada que limpia y ordena las habitaciones.</p>
+            <p><strong>Ascensor / Ascensorista:</strong> máquina para subir o bajar pisos / persona que la opera.</p>
+            <p><strong>Llavero:</strong> aro o soporte donde se guardan las llaves de las habitaciones.</p>
+            <p><strong>Timbre:</strong> aparato pequeño en el mostrador que suena al presionarlo para llamar atención.</p>
+            <p><strong>Maletas:</strong> equipaje donde los viajeros guardan su ropa y objetos.</p>
+            <p><strong>Sala de espera:</strong> espacio con sofá, mesita, alfombra, revistas y periódico para aguardar.</p>
+          </div>
+
+          <div class="bg-slate-900/70 border border-[#38bdf8]/40 rounded-2xl p-3.5 space-y-1 text-xs sm:text-sm">
+            <h3 class="text-sm sm:text-base font-bold text-[#38bdf8]">2. La oficina</h3>
+            <p><strong>Escritorio:</strong> mesa de trabajo que suele tener cajones para guardar objetos.</p>
+            <p><strong>Cajón:</strong> compartimento deslizable del escritorio donde se guardan útiles o documentos.</p>
+            <p><strong>Sala de reunión:</strong> espacio con mesa y sillas destinado a juntas y encuentros de trabajo.</p>
+            <p><strong>Ordenador / Computadora:</strong> equipo electrónico usado para trabajar y procesar datos.</p>
+            <p><strong>Impresora:</strong> máquina que pasa textos e imágenes de la computadora al papel.</p>
+            <p><strong>Estante / Estantería:</strong> mueble con repisas donde se colocan libros y carpetas.</p>
+            <p><strong>Carpetas:</strong> cubiertas de cartón o plástico para archivar y organizar papeles.</p>
+            <p><strong>Sujetapapeles:</strong> pieza pequeña (clip) que sirve para mantener varias hojas unidas.</p>
+            <p><strong>Estuche:</strong> caja o bolsa pequeña para guardar bolígrafos, lápiz y tijera.</p>
+          </div>
+
+          <div class="bg-slate-900/70 border border-[#38bdf8]/40 rounded-2xl p-3.5 space-y-1 text-xs sm:text-sm">
+            <h3 class="text-sm sm:text-base font-bold text-[#38bdf8]">3. La boda</h3>
+            <p><strong>Novio / Novia:</strong> las dos personas que se casan en la ceremonia.</p>
+            <p><strong>Cura / Pastor:</strong> autoridad religiosa que preside la ceremonia en la iglesia.</p>
+            <p><strong>Padrino / Madrina:</strong> personas elegidas para acompañar y apoyar a los novios en el altar.</p>
+            <p><strong>Suegro / Suegra:</strong> el padre y la madre del cónyuge.</p>
+            <p><strong>Ramo:</strong> conjunto de flores que lleva la novia en las manos.</p>
+            <p><strong>Tarta nupcial:</strong> pastel especial de varios pisos servido en la fiesta de matrimonio.</p>
+            <p><strong>Regalos:</strong> obsequios que los invitados llevan para los recién casados.</p>
+            <p><strong>Dote:</strong> bienes o derechos que antiguamente las mujeres aportaban al matrimonio.</p>
+            <p><strong>Luna de miel:</strong> viaje que hacen los recién casados después de la boda.</p>
+            <p><strong>Moño:</strong> rodete que se hace con el cabello para tenerlo recogido o por adorno.</p>
+          </div>
+
+          <div class="bg-slate-900/70 border border-[#38bdf8]/40 rounded-2xl p-3.5 space-y-1 text-xs sm:text-sm">
+            <h3 class="text-sm sm:text-base font-bold text-[#38bdf8]">4. El clima</h3>
+            <p><strong>Primavera / Verano / Otoño / Invierno:</strong> las cuatro estaciones del año.</p>
+            <p><strong>Soleado:</strong> día con mucho sol y cielo brillante.</p>
+            <p><strong>Despejado:</strong> cielo sin nubes, completamente limpio.</p>
+            <p><strong>Caluroso / Frío:</strong> temperatura muy alta / temperatura muy baja.</p>
+            <p><strong>Viento:</strong> corriente de aire que se mueve en la atmósfera.</p>
+            <p><strong>Lluvia / Nieve:</strong> agua que cae de las nubes en forma líquida / en copos helados.</p>
+            <p><strong>Sequía:</strong> período prolongado sin lluvias que deja la tierra muy seca.</p>
+          </div>
+        </div>
+
+        <!-- GRAMÁTICA -->
+        <div class="space-y-3 pt-2">
+          <h2 class="text-lg font-bold text-[#38bdf8] border-b border-slate-700 pb-1">GRAMÁTICA (Regras Claras + Exemplos)</h2>
+
+          <div class="bg-slate-900/70 border border-[#38bdf8]/40 rounded-2xl p-3.5 space-y-2 text-xs sm:text-sm">
+            <h3 class="text-sm sm:text-base font-bold text-[#38bdf8]">1. Preposiciones: Hacia vs. Hasta (e o verbo Hacía)</h3>
+            <p>
+              • <strong>Hacia</strong> (sem acento = rumo / aproximação):<br/>
+              1. <strong>Direção ou rumo</strong> (sem garantir que chegou ao destino): <em>Fue en bicicleta <strong>hacia</strong> Madrid.</em> (Foi de bicicleta em direção a Madri).<br/>
+              2. <strong>Tempo ou lugar aproximado</strong> (equivalente a "por volta de" / "perto de"): <em>La fiesta terminará <strong>hacia</strong> las nueve de la noche.</em> (A festa terminará por volta das 21h — não sabemos a hora exata).<br/>
+              3. <strong>Inclinação afetiva / atitude</strong>: <em>Siente un gran respeto <strong>hacia</strong> sus abuelos.</em>
+            </p>
+            <p>
+              • <strong>Hasta</strong> (= limite exato / inclusão — NÃO serve só para tempo!):<br/>
+              1. <strong>Limite exato no tempo</strong> (hora determinada): <em>El examen durará <strong>hasta</strong> las diez en punto.</em> (Termina exatamente às 10h).<br/>
+              2. <strong>Limite exato no espaço / quantidade / grau</strong> (ponto final, sem relação com tempo!): <em>El tren va desde Madrid <strong>hasta</strong> Barcelona. / El agua me llegaba <strong>hasta</strong> las rodillas.</em><br/>
+              3. <strong>Ideia de inclusão / ênfase</strong> (equivalente a "até mesmo / inclusive", também sem relação com tempo!): <em>Invitó a todos, <strong>hasta</strong> a su vecino nuevo. / Se comió <strong>hasta</strong> las migajas.</em>
+            </p>
+            <p>
+              • <strong>Verbos muito comuns que pedem <em>hasta</em> SEM relação com tempo:</strong><br/>
+              - <strong>Ir / viajar / llegar / caminar / subir / bajar hasta</strong> (limite espacial de destino): <em>Llegamos <strong>hasta</strong> la cima de la montaña.</em><br/>
+              - <strong>Acompañar hasta</strong> (levar alguém até a porta/saída): <em>Te acompaño <strong>hasta</strong> la puerta.</em><br/>
+              - <strong>Llenar / cubrir / mojarse hasta</strong> (limite físico ou de nível): <em>Llenó el vaso <strong>hasta</strong> el borde. / Me mojé <strong>hasta</strong> los huesos.</em><br/>
+              - <strong>Contar / sumar / multiplicar hasta</strong> (limite numérico): <em>Mi hijo ya sabe contar <strong>hasta</strong> cien.</em><br/>
+              - <strong>Aguantar / soportar / hartarse hasta</strong> (limite emocional/de paciência): <em>Estoy harto <strong>hasta</strong> la coronilla.</em>
+            </p>
+            <p>
+              • <strong>¡Cuidado con la tilde! (Hacia vs. Hacía):</strong><br/>
+              - <strong>Hacia</strong> (sem acento): é a preposição acima (direção / por volta de).<br/>
+              - <strong>Hacía</strong> (com acento no <strong>í</strong>): é o verbo <em>hacer</em> no passado (fazia). Ex.: <em>Ayer <strong>hacía</strong> mucho frío.</em>
+            </p>
+          </div>
+
+          <div class="bg-slate-900/70 border border-[#38bdf8]/40 rounded-2xl p-3.5 space-y-1.5 text-xs sm:text-sm">
+            <h3 class="text-sm sm:text-base font-bold text-[#38bdf8]">2. Pronombres de Objeto Directo (O.D.)</h3>
+            <p>• Substituem quem recebe a ação diretamente (sem preposição): <strong>me, te, lo, la, nos, os, los, las</strong>.</p>
+            <p>• <strong>Posição:</strong> Vão <strong>antes</strong> do verbo conjugado (Ex.: <em>¿El periódico? Sí, ya <strong>lo</strong> leí.</em>). Com <strong>infinitivo, gerúndio e imperativo afirmativo</strong>, vão <strong>depois e soldados</strong> ao verbo (Ex.: <em>Cómprala / Voy a leerlo / Leyéndolo</em>).</p>
+          </div>
+
+          <div class="bg-slate-900/70 border border-[#38bdf8]/40 rounded-2xl p-3.5 space-y-1.5 text-xs sm:text-sm">
+            <h3 class="text-sm sm:text-base font-bold text-[#38bdf8]">3. Pronombres de Objeto Indirecto (O.I.) e a Regra do SE</h3>
+            <p>• Indicam o destinatário (<em>¿a quién? / ¿para quién?</em>): <strong>me, te, le, nos, os, les</strong>. Ex.: <em>Compré un regalo a mi madre → <strong>Le</strong> compré un regalo.</em></p>
+            <p>• <strong>Ordem obrigatória (O.I. + O.D.):</strong> O pronome indireto vem sempre primeiro. Ex.: <em><strong>Me la</strong> compré ayer.</em></p>
+            <p>• <strong>Regra do SE:</strong> Quando <strong>le</strong> ou <strong>les</strong> ficam antes de <strong>lo, la, los, las</strong>, mudam obrigatoriamente para <strong>se</strong> (para evitar *le lo / *les lo). Ex.: <em>Conté el secreto a mis amigos → <strong>Se lo</strong> conté.</em></p>
+          </div>
+
+          <div class="bg-slate-900/70 border border-[#38bdf8]/40 rounded-2xl p-3.5 space-y-1.5 text-xs sm:text-sm">
+            <h3 class="text-sm sm:text-base font-bold text-[#38bdf8]">4. Sustantivos que cambian de significado según el género</h3>
+            <p>• O sentido muda totalmente conforme o artigo masculino (<strong>el</strong>) ou feminino (<strong>la</strong>):</p>
+            <p>
+              • <em><strong>el</strong> cabeza</em> (o líder/chefe) vs. <em><strong>la</strong> cabeza</em> (parte do corpo)<br/>
+              • <em><strong>el</strong> capital</em> (dinheiro/patrimônio) vs. <em><strong>la</strong> capital</em> (cidade principal)<br/>
+              • <em><strong>el</strong> cólera</em> (a doença) vs. <em><strong>la</strong> cólera</em> (a raiva/ira)<br/>
+              • <em><strong>el</strong> cura</em> (o padre) vs. <em><strong>la</strong> cura</em> (a cura de uma doença)<br/>
+              • <em><strong>el</strong> cometa</em> (o astro no céu) vs. <em><strong>la</strong> cometa</em> (a pipa/brinquedo)<br/>
+              • <em><strong>el</strong> frente</em> (frente de batalha/fachada) vs. <em><strong>la</strong> frente</em> (a testa)<br/>
+              • <em><strong>el</strong> guía</em> (o guia turístico/pessoa) vs. <em><strong>la</strong> guía</em> (o manual/livro guia)<br/>
+              • <em><strong>el</strong> orden</em> (organização/arrumação) vs. <em><strong>la</strong> orden</em> (mandato/ordem religiosa)<br/>
+              • <em><strong>el</strong> pendiente</em> (o brinco) vs. <em><strong>la</strong> pendiente</em> (a ladeira/declive)<br/>
+              • <em><strong>el</strong> policía</em> (o agente policial) vs. <em><strong>la</strong> policía</em> (a instituição policial)
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-3 flex justify-center">
+        <button id="start-btn" class="px-8 py-3 rounded-full font-bold text-base bg-[#0284c7] hover:bg-[#38bdf8] text-white border-2 border-white transition cursor-pointer shadow-lg">
+          Iniciar quiz →
+        </button>
+      </div>
+    </section>
+
+    <!-- Menu de Navegação das Questões por Tópicos -->
+    <nav id="question-nav" class="hidden flex flex-col gap-2 mb-4 pb-3 border-b border-slate-700/60" aria-label="Navegação das questões por tópicos">
+      <div id="topic-tabs" class="flex flex-wrap items-center justify-center gap-1.5"></div>
+      <div id="topic-questions" class="flex flex-wrap items-center justify-center gap-1.5"></div>
+    </nav>
+
+    <!-- Área Dinâmica da Questão -->
+    <section id="quiz-container" class="hidden flex-1 flex flex-col justify-between gap-4">
+      <div id="question-area" class="space-y-4"></div>
+
+      <!-- Feedback -->
+      <div id="feedback-box" class="hidden rounded-2xl p-4 border text-sm sm:text-base leading-relaxed"></div>
+
+      <!-- Controles: Previous, Check, Next -->
+      <div class="pt-2 flex flex-wrap items-center justify-between gap-3">
+        <button id="prev-btn" class="px-5 py-2.5 rounded-full font-bold bg-slate-800 hover:bg-slate-700 text-white border-2 border-white/60 transition cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed">
+          ← Previous
+        </button>
+
+        <button id="check-btn" class="px-6 py-2.5 rounded-full font-bold bg-[#0284c7] hover:bg-[#38bdf8] text-white border-2 border-white/80 transition cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed">
+          Check
+        </button>
+
+        <button id="next-btn" class="px-6 py-2.5 rounded-full font-bold bg-[#0284c7] hover:bg-[#38bdf8] text-white border-2 border-white/80 transition cursor-pointer">
+          Next →
+        </button>
+      </div>
+    </section>
+
+    <!-- Tela Final -->
+    <section id="result-screen" class="hidden flex-1 flex flex-col items-center justify-center text-center gap-5 py-6">
+      <h2 class="text-3xl font-bold text-[#38bdf8]">¡Simulado Concluído!</h2>
+      <div class="bg-slate-900/80 border-2 border-[#38bdf8] rounded-2xl px-8 py-5">
+        <p class="text-xs uppercase tracking-wider text-[#94a3b8] mb-1">Nota Final</p>
+        <p id="final-score-text" class="text-3xl sm:text-4xl font-bold text-[#f8f9fa]"></p>
+      </div>
+      <p id="final-message" class="text-sm sm:text-base text-[#94a3b8] max-w-md"></p>
+      <button id="restart-btn" class="px-8 py-3 rounded-full font-bold bg-[#0284c7] hover:bg-[#38bdf8] text-white border-2 border-white transition cursor-pointer">
+        Refazer Quiz
+      </button>
+    </section>
+  </main>
+
+  <script>
+    const questions = [
+      // ================= BLOCO 1: EL HOTEL (1 - 10) =================
+      {
+        block: "Vocabulario: El hotel",
+        question: "1. Señala la frase en la que la palabra <u>botones</u> está aplicada correctamente:",
+        options: [
+          "a. El botones preparó la tarta nupcial en la cocina del hotel.",
+          "b. El botones llevó nuestras maletas hasta la habitación del tercer piso.",
+          "c. El botones sirvió para encender la lámpara de mesa.",
+          "d. El botones es el mueble donde dejamos las revistas y el periódico.",
+          "e. El botones nos informó que hoy habrá mucha sequía."
+        ],
+        correct: 1,
+        feedback: "Correto! Letra <strong>b</strong>. <strong>El botones</strong> é o mensageiro/carregador do hotel responsável por levar as malas (<em>maletas</em>) dos hóspedes."
+      },
+      {
+        block: "Vocabulario: El hotel",
+        question: "2. Señala la frase en la que la palabra <u>mostrador</u> está aplicada correctamente:",
+        options: [
+          "a. Me senté en el mostrador blando para leer el periódico.",
+          "b. El mostrador subió rápidamente hasta el quinto piso.",
+          "c. El recepcionista nos atendió detrás del mostrador de la recepción.",
+          "d. Guardamos toda la ropa dentro del mostrador antes del viaje.",
+          "e. El mostrador limpió las sábanas y ordenó el cuarto."
+        ],
+        correct: 2,
+        feedback: "Correto! Letra <strong>c</strong>. <strong>El mostrador</strong> é o balcão da recepção onde o recepcionista atende os clientes."
+      },
+      {
+        block: "Vocabulario: El hotel",
+        question: "3. Señala la frase en la que la palabra <u>llavero</u> está aplicada correctamente:",
+        options: [
+          "a. Colgué la llave de la habitación en el llavero de la recepción.",
+          "b. El llavero nos dio la bienvenida en la puerta de la iglesia.",
+          "c. Puse mis pies sobre el llavero para descansar en el sofá.",
+          "d. El llavero imprimió los documentos de la reunión.",
+          "e. Compré un llavero para protegerme de la lluvia."
+        ],
+        correct: 0,
+        feedback: "Correto! Letra <strong>a</strong>. <strong>El llavero</strong> é o chaveiro ou painel/suporte onde se guardam as chaves dos quartos."
+      },
+      {
+        block: "Vocabulario: El hotel",
+        question: "4. Señala la frase en la que la palabra <u>timbre</u> está aplicada correctamente:",
+        options: [
+          "a. El timbre del hotel nos llevó las maletas al cuarto.",
+          "b. Nos sentamos en el timbre mientras esperábamos el taxi.",
+          "c. El huésped abrió el timbre para sacar su ropa.",
+          "d. Como no había nadie en el mostrador, toqué el timbre para llamar al empleado.",
+          "e. Leí las noticias del día en el timbre de la mesita."
+        ],
+        correct: 3,
+        feedback: "Correto! Letra <strong>d</strong>. <strong>El timbre</strong> é a campainha no balcão usada para chamar o atendente."
+      },
+      {
+        block: "Vocabulario: El hotel",
+        question: "5. Señala la frase en la que la palabra <u>camarera</u> está aplicada correctamente:",
+        options: [
+          "a. La camarera condujo el ascensor todo el día.",
+          "b. La camarera preside la ceremonia religiosa en la iglesia.",
+          "c. La camarera es la madre del novio en la boda.",
+          "d. La camarera archivó las carpetas en la estantería.",
+          "e. La camarera limpió la habitación y cambió las toallas."
+        ],
+        correct: 4,
+        feedback: "Correto! Letra <strong>e</strong>. <strong>La camarera</strong> é a camareira, responsável pela limpeza e arrumação dos quartos."
+      },
+      {
+        block: "Vocabulario: El hotel",
+        question: "6. Señala la frase en la que la palabra <u>ascensorista</u> está aplicada correctamente:",
+        options: [
+          "a. El ascensorista operó el elevador para llevarnos al décimo piso.",
+          "b. El ascensorista escribió un artículo para el periódico.",
+          "c. El ascensorista guardó los bolígrafos en el estuche.",
+          "d. El ascensorista nos trajo el ramo de flores.",
+          "e. El ascensorista es la alfombra que cubre el piso."
+        ],
+        correct: 0,
+        feedback: "Correto! Letra <strong>a</strong>. <strong>El ascensorista</strong> é o profissional que opera o elevador (<em>ascensor</em>)."
+      },
+      {
+        block: "Vocabulario: El hotel",
+        question: "7. Señala la frase en la que la palabra <u>conserje</u> está aplicada correctamente:",
+        options: [
+          "a. El conserje es una máquina que imprime hojas.",
+          "b. El conserje es el mueble donde se apoya la lámpara de mesa.",
+          "c. El conserje de la entrada nos dio informaciones sobre la ciudad.",
+          "d. Guardamos los sujetapapeles dentro del conserje.",
+          "e. El conserje cayó en forma de nieve durante el invierno."
+        ],
+        correct: 2,
+        feedback: "Correto! Letra <strong>c</strong>. <strong>El conserje</strong> é o porteiro/concierge que auxilia os hóspedes com informações e chaves."
+      },
+      {
+        block: "Vocabulario: El hotel",
+        question: "8. Señala la frase en la que la palabra <u>alfombra</u> está aplicada correctamente:",
+        options: [
+          "a. Llamé por teléfono usando la alfombra de la recepción.",
+          "b. La alfombra decoraba el suelo debajo de la mesita y del sofá.",
+          "c. Encendí la alfombra para iluminar el mostrador.",
+          "d. La alfombra atendió a los huéspedes en la sala de espera.",
+          "e. Metí todas mis camisas dentro de la alfombra."
+        ],
+        correct: 1,
+        feedback: "Correto! Letra <strong>b</strong>. <strong>La alfombra</strong> é o tapete que cobre o chão da sala de espera."
+      },
+      {
+        block: "Vocabulario: El hotel",
+        question: "9. Señala la frase en la que la palabra <u>sala de espera</u> está aplicada correctamente:",
+        options: [
+          "a. La sala de espera es el aparato donde vemos las noticias.",
+          "b. Guardamos las llaves de los cuartos en la sala de espera.",
+          "c. La sala de espera subió por el ascensor con las maletas.",
+          "d. Los huéspedes se sentaron en el sofá de la sala de espera mientras aguardaban su turno.",
+          "e. La sala de espera es la persona que limpia las habitaciones."
+        ],
+        correct: 3,
+        feedback: "Correto! Letra <strong>d</strong>. <strong>La sala de espera</strong> é o ambiente com sofá e mesinha onde os hóspedes aguardam."
+      },
+      {
+        block: "Vocabulario: El hotel",
+        question: "10. Señala la frase en la que la palabra <u>lámpara de mesa</u> está aplicada correctamente:",
+        options: [
+          "a. La lámpara de mesa trajo las maletas desde el coche.",
+          "b. Leímos las revistas encima de la lámpara de mesa.",
+          "c. La lámpara de mesa iluminaba el mostrador de la recepción.",
+          "d. La lámpara de mesa es el vehículo que lleva a los novios.",
+          "e. Nos sentamos en la lámpara de mesa para ver el televisor."
+        ],
+        correct: 2,
+        feedback: "Correto! Letra <strong>c</strong>. <strong>La lámpara de mesa</strong> é a luminária/abajur que ilumina o balcão."
+      },
+
+      // ================= BLOCO 2: LA OFICINA (11 - 20) =================
+      {
+        block: "Vocabulario: La oficina",
+        question: "11. Señala la frase en la que la palabra <u>escritorio</u> está aplicada correctamente:",
+        options: [
+          "a. Puse el ordenador y los bolígrafos sobre mi escritorio para empezar a trabajar.",
+          "b. El escritorio imprimió veinte páginas en un minuto.",
+          "c. Corté el papel con el escritorio de la oficina.",
+          "d. El escritorio es el empleado que lleva las maletas.",
+          "e. Guardé el escritorio dentro de un estuche pequeño."
+        ],
+        correct: 0,
+        feedback: "Correto! Letra <strong>a</strong>. <strong>El escritorio</strong> é a mesa de trabalho do escritório."
+      },
+      {
+        block: "Vocabulario: La oficina",
+        question: "12. Señala la frase en la que la palabra <u>cajón</u> está aplicada correctamente:",
+        options: [
+          "a. Nos sentamos en el cajón durante la reunión con el jefe.",
+          "b. El cajón nos mostró las diapositivas en la pantalla.",
+          "c. Abrí el último cajón del escritorio para buscar las tijeras.",
+          "d. El cajón sirve para unir varias hojas de papel.",
+          "e. Colgamos el cajón en la pared de la sala de reunión."
+        ],
+        correct: 2,
+        feedback: "Correto! Letra <strong>c</strong>. <strong>El cajón</strong> é a gaveta da mesa de escritório."
+      },
+      {
+        block: "Vocabulario: La oficina",
+        question: "13. Señala la frase en la que la palabra <u>carpetas</u> está aplicada correctamente:",
+        options: [
+          "a. Escribí la carta usando dos carpetas de tinta azul.",
+          "b. Las carpetas iluminaron toda la sala de reunión.",
+          "c. Las carpetas son las sillas donde se sientan los empleados.",
+          "d. Organicé todos los documentos importantes dentro de carpetas en la estantería.",
+          "e. Tomamos café en las carpetas antes de trabajar."
+        ],
+        correct: 3,
+        feedback: "Correto! Letra <strong>d</strong>. <strong>Las carpetas</strong> são as pastas usadas para arquivar e organizar documentos."
+      },
+      {
+        block: "Vocabulario: La oficina",
+        question: "14. Señala la frase en la que la palabra <u>impresora</u> está aplicada correctamente:",
+        options: [
+          "a. Guardé los libros en la impresora de la pared.",
+          "b. La impresora falló y no pudimos sacar en papel el informe del ordenador.",
+          "c. La impresora es el estuche donde guardo mi lápiz.",
+          "d. Me senté en la impresora porque era muy cómoda.",
+          "e. La impresora preside la ceremonia en la iglesia."
+        ],
+        correct: 1,
+        feedback: "Correto! Letra <strong>b</strong>. <strong>La impresora</strong> é a impressora que passa os arquivos do computador para o papel."
+      },
+      {
+        block: "Vocabulario: La oficina",
+        question: "15. Señala la frase en la que la palabra <u>sujetapapeles</u> está aplicada correctamente:",
+        options: [
+          "a. Puse un sujetapapeles para mantener juntas las hojas del contrato.",
+          "b. El sujetapapeles es una habitación grande para reuniones.",
+          "c. Escribí mi nombre con un sujetapapeles negro.",
+          "d. El sujetapapeles es el mueble donde se guardan las carpetas.",
+          "e. Guardé el ordenador dentro del sujetapapeles."
+        ],
+        correct: 0,
+        feedback: "Correto! Letra <strong>a</strong>. <strong>El sujetapapeles</strong> é o clipe de papel usado para prender folhas."
+      },
+      {
+        block: "Vocabulario: La oficina",
+        question: "16. Señala la frase en la que la palabra <u>estuche</u> está aplicada correctamente:",
+        options: [
+          "a. El estuche es la mesa donde trabaja el director.",
+          "b. Imprimimos los documentos usando el estuche.",
+          "c. El estuche nos llevó hasta el quinto piso del edificio.",
+          "d. Guardé los bolígrafos, el lápiz y la goma dentro de mi estuche.",
+          "e. Nos reunimos en el estuche para discutir el proyecto."
+        ],
+        correct: 3,
+        feedback: "Correto! Letra <strong>d</strong>. <strong>El estuche</strong> é o estojo onde se guardam canetas, lápis e borracha."
+      },
+      {
+        block: "Vocabulario: La oficina",
+        question: "17. Señala la frase en la que la palabra <u>estantería</u> está aplicada correctamente:",
+        options: [
+          "a. La estantería escribió el correo electrónico rápidamente.",
+          "b. Corté el cartón con la estantería nueva.",
+          "c. La estantería es el aparato que suena en la recepción.",
+          "d. Puse la silla dentro de la estantería pequeña.",
+          "e. En la estantería de la oficina hay muchas carpetas y libros ordenados."
+        ],
+        correct: 4,
+        feedback: "Correto! Letra <strong>e</strong>. <strong>La estantería</strong> é a estante onde ficam organizados livros e pastas."
+      },
+      {
+        block: "Vocabulario: La oficina",
+        question: "18. Señala la frase en la que la palabra <u>sala de reunión</u> está aplicada correctamente:",
+        options: [
+          "a. Los publicistas se encontraron en la sala de reunión para presentar sus ideas.",
+          "b. Guardé las tijeras dentro de la sala de reunión del escritorio.",
+          "c. La sala de reunión es una herramienta para cortar papel.",
+          "d. La sala de reunión se usa para imprimir archivos.",
+          "e. Puse un sujetapapeles en la sala de reunión."
+        ],
+        correct: 0,
+        feedback: "Correto! Letra <strong>a</strong>. <strong>La sala de reunión</strong> é a sala destinada a encontros e reuniões de trabalho."
+      },
+      {
+        block: "Vocabulario: La oficina",
+        question: "19. Señala la frase en la que la palabra <u>ordenador</u> está aplicada correctamente:",
+        options: [
+          "a. El ordenador es la persona que limpia las habitaciones.",
+          "b. Encendí el ordenador para redactar el informe de ventas.",
+          "c. El ordenador es el pastel que se sirve en la boda.",
+          "d. Guardamos los libros dentro del ordenador de madera.",
+          "e. Me senté en el ordenador para descansar."
+        ],
+        correct: 1,
+        feedback: "Correto! Letra <strong>b</strong>. <strong>El ordenador</strong> (ou <em>computadora</em>) é o computador usado no escritório."
+      },
+      {
+        block: "Vocabulario: La oficina",
+        question: "20. Señala la frase en la que la palabra <u>tijera</u> está aplicada correctamente:",
+        options: [
+          "a. Escribí toda la carta con una tijera azul.",
+          "b. La tijera nos dio informaciones sobre el clima.",
+          "c. Usé la tijera para recortar el papel que sobraba.",
+          "d. Guardamos la mesa dentro de la tijera.",
+          "e. La tijera iluminó el escritorio durante la noche."
+        ],
+        correct: 2,
+        feedback: "Correto! Letra <strong>c</strong>. <strong>La tijera</strong> é a tesoura usada para cortar papéis."
+      },
+
+      // ================= BLOCO 3: LA BODA (21 - 30) =================
+      {
+        block: "Vocabulario: La boda",
+        question: "21. Señala la frase en la que la palabra <u>ramo</u> está aplicada correctamente:",
+        options: [
+          "a. La novia entró en la iglesia llevando un hermoso ramo de flores blancas.",
+          "b. El ramo presidió la ceremonia religiosa.",
+          "c. Cortamos el ramo con un cuchillo para servir a los invitados.",
+          "d. El ramo es el padre de la novia.",
+          "e. Guardamos los regalos dentro del ramo."
+        ],
+        correct: 0,
+        feedback: "Correto! Letra <strong>a</strong>. <strong>El ramo</strong> é o buquê de flores que a noiva carrega."
+      },
+      {
+        block: "Vocabulario: La boda",
+        question: "22. Señala la frase en la que la palabra <u>tarta nupcial</u> está aplicada correctamente:",
+        options: [
+          "a. La tarta nupcial acompañó a los novios hasta el altar.",
+          "b. Los novios viajaron en la tarta nupcial después de la fiesta.",
+          "c. La tarta nupcial es el rodete que se hace con el cabello.",
+          "d. Todos los invitados comieron un trozo de la tarta nupcial en la fiesta.",
+          "e. La tarta nupcial es el edificio donde se celebra el matrimonio."
+        ],
+        correct: 3,
+        feedback: "Correto! Letra <strong>d</strong>. <strong>La tarta nupcial</strong> é o bolo de casamento servido na festa."
+      },
+      {
+        block: "Vocabulario: La boda",
+        question: "23. Señala la frase en la que la palabra <u>cura</u> está aplicada correctamente:",
+        options: [
+          "a. El cura es el viaje que hacen los recién casados.",
+          "b. El cura presidió la ceremonia de matrimonio en la iglesia.",
+          "c. El cura es el pastel de varios pisos.",
+          "d. La novia llevó el cura en sus manos.",
+          "e. Pusimos el cura sobre la mesa de regalos."
+        ],
+        correct: 1,
+        feedback: "Correto! Letra <strong>b</strong>. <strong>El cura</strong> (ou <em>pastor</em>) é o sacerdote que celebra a cerimônia."
+      },
+      {
+        block: "Vocabulario: La boda",
+        question: "24. Señala la frase en la que la palabra <u>suegro</u> está aplicada correctamente:",
+        options: [
+          "a. El suegro es el conjunto de flores de la novia.",
+          "b. El suegro es el regalo que llevan los invitados.",
+          "c. El padre de mi esposa es mi suegro.",
+          "d. El suegro es la iglesia donde nos casamos.",
+          "e. El suegro es el peinado recogido de la madrina."
+        ],
+        correct: 2,
+        feedback: "Correto! Letra <strong>c</strong>. <strong>El suegro</strong> é o sogro (pai do cônjuge)."
+      },
+      {
+        block: "Vocabulario: La boda",
+        question: "25. Señala la frase en la que la palabra <u>luna de miel</u> está aplicada correctamente:",
+        options: [
+          "a. La luna de miel es el dinero que se aporta al matrimonio.",
+          "b. Comimos la luna de miel después de la cena.",
+          "c. La luna de miel se sentó en la primera fila de la iglesia.",
+          "d. La luna de miel es el anillo que usan los novios.",
+          "e. Después de la boda, los recién casados viajaron de luna de miel a la playa."
+        ],
+        correct: 4,
+        feedback: "Correto! Letra <strong>e</strong>. <strong>La luna de miel</strong> é a viagem de lua de mel dos recém-casados."
+      },
+      {
+        block: "Vocabulario: La boda",
+        question: "26. Señala la frase en la que la palabra <u>dote</u> está aplicada correctamente:",
+        options: [
+          "a. Antiguamente, antes de casarse, las mujeres aportaban al matrimonio bienes y derechos llamados dote.",
+          "b. La dote es la madre del novio.",
+          "c. La dote llevó las maletas hasta la habitación.",
+          "d. Nos sentamos en la dote para esperar la ceremonia.",
+          "e. La dote cayó del cielo en forma de lluvia."
+        ],
+        correct: 0,
+        feedback: "Correto! Letra <strong>a</strong>. <strong>La dote</strong> refere-se aos bens e direitos que antigamente a mulher levava ao casamento."
+      },
+      {
+        block: "Vocabulario: La boda",
+        question: "27. Señala la frase en la que la palabra <u>moño</u> está aplicada correctamente:",
+        options: [
+          "a. El moño presidió la boda en la iglesia.",
+          "b. La novia se hizo un moño elegante para tener el cabello recogido.",
+          "c. El moño es el pastel dulce de la fiesta.",
+          "d. Guardamos los regalos dentro del moño.",
+          "e. El moño es el padre del novio."
+        ],
+        correct: 1,
+        feedback: "Correto! Letra <strong>b</strong>. <strong>El moño</strong> é o coque (rodete) feito com o cabelo preso."
+      },
+      {
+        block: "Vocabulario: La boda",
+        question: "28. Señala la frase en la que la palabra <u>madrina</u> está aplicada correctamente:",
+        options: [
+          "a. La madrina es el edificio religioso de la boda.",
+          "b. Cortamos la madrina para repartirla entre los invitados.",
+          "c. La madrina acompañó a los novios en el altar durante la ceremonia.",
+          "d. La madrina es el viaje después del matrimonio.",
+          "e. Pusimos las flores dentro de la madrina."
+        ],
+        correct: 2,
+        feedback: "Correto! Letra <strong>c</strong>. <strong>La madrina</strong> é a madrinha do casamento."
+      },
+      {
+        block: "Vocabulario: La boda",
+        question: "29. Señala la frase en la que la palabra <u>regalos</u> está aplicada correctamente:",
+        options: [
+          "a. Los regalos caminaron hacia el altar con la novia.",
+          "b. Los regalos son los padres de la novia.",
+          "c. Los regalos limpiaron la iglesia antes de la boda.",
+          "d. Los invitados dejaron los regalos para los novios sobre una mesa.",
+          "e. Los regalos se hicieron un moño en el cabello."
+        ],
+        correct: 3,
+        feedback: "Correto! Letra <strong>d</strong>. <strong>Los regalos</strong> são os presentes dados aos noivos."
+      },
+      {
+        block: "Vocabulario: La boda",
+        question: "30. Señala la frase en la que la palabra <u>iglesia</u> está aplicada correctamente:",
+        options: [
+          "a. La iglesia es el ramo de flores blancas.",
+          "b. La iglesia es el pastel de bodas.",
+          "c. La iglesia se casó con el novio el sábado.",
+          "d. Guardamos el periódico dentro de la iglesia.",
+          "e. La ceremonia religiosa se celebró en la iglesia del centro."
+        ],
+        correct: 4,
+        feedback: "Correto! Letra <strong>e</strong>. <strong>La iglesia</strong> é a igreja onde ocorre a cerimônia religiosa."
+      },
+
+      // ================= BLOCO 4: EL CLIMA (31 - 40) =================
+      {
+        block: "Vocabulario: El clima",
+        question: "31. Señala la frase en la que la palabra <u>sequía</u> está aplicada correctamente:",
+        options: [
+          "a. Debido a la larga sequía, la tierra del campo está completamente agrietada y sin agua.",
+          "b. Durante la sequía, cayó mucha nieve sobre los árboles.",
+          "c. La sequía es una estación llena de flores.",
+          "d. Nos pusimos abrigo porque hacía mucha sequía y frío.",
+          "e. La sequía iluminó el cielo despejado."
+        ],
+        correct: 0,
+        feedback: "Correto! Letra <strong>a</strong>. <strong>La sequía</strong> é a seca prolongada por falta de chuvas."
+      },
+      {
+        block: "Vocabulario: El clima",
+        question: "32. Señala la frase en la que la palabra <u>despejado</u> está aplicada correctamente:",
+        options: [
+          "a. El cielo está despejado, por eso está cayendo una lluvia muy fuerte.",
+          "b. Hoy el cielo está totalmente despejado, sin ninguna nube.",
+          "c. El despejado es la estación más fría del año.",
+          "d. Llevamos paraguas porque el día está despejado.",
+          "e. El despejado rompió los vidrios con su fuerza."
+        ],
+        correct: 1,
+        feedback: "Correto! Letra <strong>b</strong>. <strong>Despejado</strong> significa céu limpo, sem nuvens."
+      },
+      {
+        block: "Vocabulario: El clima",
+        question: "33. Señala la frase en la que la palabra <u>otoño</u> está aplicada correctamente:",
+        options: [
+          "a. El otoño es el viento fuerte que sopla en la playa.",
+          "b. El otoño cayó sobre las montañas en forma de hielo.",
+          "c. En otoño, las hojas de los árboles se vuelven amarillas y caen al suelo.",
+          "d. El otoño es un día muy caluroso en el desierto.",
+          "e. Guardamos el otoño en el cajón del escritorio."
+        ],
+        correct: 2,
+        feedback: "Correto! Letra <strong>c</strong>. <strong>El otoño</strong> é o outono, estação em que as folhas caem."
+      },
+      {
+        block: "Vocabulario: El clima",
+        question: "34. Señala la frase en la que la palabra <u>soleado</u> está aplicada correctamente:",
+        options: [
+          "a. Como está soleado, no podemos ver el sol en todo el día.",
+          "b. Está muy soleado, así que va a nevar esta tarde.",
+          "c. El soleado es la falta total de lluvia.",
+          "d. Aprovechamos el día soleado para ir a la playa.",
+          "e. Nos quedamos en casa por culpa del soleado helado."
+        ],
+        correct: 3,
+        feedback: "Correto! Letra <strong>d</strong>. <strong>Soleado</strong> significa ensolarado, dia com sol."
+      },
+      {
+        block: "Vocabulario: El clima",
+        question: "35. Señala la frase en la que la palabra <u>nieve</u> está aplicada correctamente:",
+        options: [
+          "a. La nieve secó todas las plantas por falta de agua.",
+          "b. En el desierto hay mucha nieve por el calor extremo.",
+          "c. La nieve es la estación de las flores.",
+          "d. La nieve sopló con fuerza desde el mar.",
+          "e. En invierno, la nieve cubrió de blanco todos los árboles."
+        ],
+        correct: 4,
+        feedback: "Correto! Letra <strong>e</strong>. <strong>La nieve</strong> é a neve que cobre a paisagem no inverno."
+      },
+      {
+        block: "Vocabulario: El clima",
+        question: "36. Señala la frase en la que la palabra <u>caluroso</u> está aplicada correctamente:",
+        options: [
+          "a. El verano en esta ciudad es muy caluroso, siempre supera los 35 grados.",
+          "b. El día está tan caluroso que necesitamos abrigo y bufanda.",
+          "c. El caluroso es una estación con mucha nieve.",
+          "d. El caluroso cayó del cielo en forma de gotas.",
+          "e. El caluroso es el cielo sin nubes."
+        ],
+        correct: 0,
+        feedback: "Correto! Letra <strong>a</strong>. <strong>Caluroso</strong> significa muito quente."
+      },
+      {
+        block: "Vocabulario: El clima",
+        question: "37. Señala la frase en la que la palabra <u>lluvia</u> está aplicada correctamente:",
+        options: [
+          "a. La lluvia dejó la tierra seca y agrietada.",
+          "b. La gente abrió sus paraguas cuando empezó la lluvia.",
+          "c. La lluvia es la estación en que florecen las plantas.",
+          "d. El cielo está sin nubes porque hay mucha lluvia.",
+          "e. La lluvia es el calor intenso del desierto."
+        ],
+        correct: 1,
+        feedback: "Correto! Letra <strong>b</strong>. <strong>La lluvia</strong> é a chuva."
+      },
+      {
+        block: "Vocabulario: El clima",
+        question: "38. Señala la frase en la que la palabra <u>viento</u> está aplicada correctamente:",
+        options: [
+          "a. El viento congeló el lago durante el verano.",
+          "b. El viento es la falta de agua en el suelo.",
+          "c. El viento fuerte movía las ramas de los árboles.",
+          "d. El viento es una estación del año.",
+          "e. Usamos gafas de sol por culpa del viento."
+        ],
+        correct: 2,
+        feedback: "Correto! Letra <strong>c</strong>. <strong>El viento</strong> é o vento."
+      },
+      {
+        block: "Vocabulario: El clima",
+        question: "39. Señala la frase en la que la palabra <u>primavera</u> está aplicada correctamente:",
+        options: [
+          "a. En primavera todo se cubre de nieve blanca.",
+          "b. La primavera es un período de sequía extrema.",
+          "c. La primavera es el aire que se mueve rápido.",
+          "d. En primavera los campos se llenan de flores coloridas.",
+          "e. La primavera es la temperatura bajo cero."
+        ],
+        correct: 3,
+        feedback: "Correto! Letra <strong>d</strong>. <strong>La primavera</strong> é a estação das flores."
+      },
+      {
+        block: "Vocabulario: El clima",
+        question: "40. Señala la frase en la que la palabra <u>frío</u> está aplicada correctamente:",
+        options: [
+          "a. Hace tanto frío que fuimos a nadar al mar.",
+          "b. El frío es el cielo completamente azul.",
+          "c. En el desierto siempre hace mucho frío al mediodía.",
+          "d. El frío es la estación en que caen las hojas.",
+          "e. Ponte una chaqueta gruesa porque hoy hace mucho frío."
+        ],
+        correct: 4,
+        feedback: "Correto! Letra <strong>e</strong>. <strong>El frío</strong> indica baixa temperatura."
+      },
+
+      // ================= BLOCO 5: GRAMÁTICA (41 - 55) =================
+      {
+        block: "Gramática",
+        question: "41. Marca la ÚNICA opción en la que <u>hacia</u> y <u>hasta</u> están empleados CORRECTAMENTE:",
+        options: [
+          "a. No sé a qué hora exacta terminará la fiesta, pero creo que acabará hasta las nueve, y después caminaremos hacia casa.",
+          "b. Este tren llega hasta Barcelona (su última parada), pero creo que saldrá hasta las cinco aproximadamente.",
+          "c. Salió en bicicleta hacia Madrid y el partido de fútbol durará hasta las diez en punto.",
+          "d. El amor de Fidel hasta su madre es inmenso, y mañana viajará hacia Cataluña como destino final de la línea.",
+          "e. Llevó a toda su familia de viaje, hacia el perro, y se quedó mirando hasta el horizonte."
+        ],
+        correct: 2,
+        feedback: `
+          <strong>Gabarito: Letra c.</strong><br/>
+          • <strong>Por que a C está correta?</strong> <em>Hacia Madrid</em> indica direção/rumo ("em direção a Madri"), e <em>hasta las diez en punto</em> indica um limite exato de tempo.<br/><br/>
+          <strong>Análise detalhada dos erros das outras alternativas (e atenção à armadilha do <em>hasta</em>!):</strong><br/>
+          • <strong>Erro na A:</strong> Usou <em>*hasta las nueve</em> para uma hora incerta/aproximada ("no sé a qué hora exacta... creo que acabará..."). Quando o horário é aproximado ("por volta de"), usa-se <strong>hacia</strong> (<em>hacia las nueve</em>).<br/>
+          • <strong>Erro na B:</strong> A primeira parte (<em>llega hasta Barcelona</em>) está <strong>certa</strong>! Muita gente erra achando que <em>hasta</em> só serve para tempo, mas verbos de movimento/destino como <strong>llegar, ir, viajar, caminar, acompañar</strong> usam <strong>hasta</strong> para indicar o limite no espaço. O erro da B está no final: hora aproximada (<em>aproximadamente</em>) exige <strong>hacia</strong> (<em>hacia las cinco</em>), não <em>*hasta</em>.<br/>
+          • <strong>Erro na D:</strong> Sentimento ou atitude direcionada a alguém pede <strong>hacia</strong> (<em>el amor hacia su madre</em>), e destino final pede <strong>hasta</strong> (<em>viajará hasta Cataluña</em>).<br/>
+          • <strong>Erro na E:</strong> Para inclusão ("até mesmo / inclusive o cachorro"), usa-se <strong>hasta</strong> (<em>hasta el perro</em>) — outro caso em que <em>hasta</em> não tem relação nenhuma com tempo! E para direção vaga ("olhar para o horizonte"), usa-se <strong>hacia</strong> (<em>mirar hacia el horizonte</em>).
+        `
+      },
+      {
+        block: "Gramática",
+        question: "42. Elige la ÚNICA alternativa donde las palabras <u>hacia</u> (preposición) y <u>hacía</u> (verbo <em>hacer</em> en pasado) están empleadas CORRECTAMENTE:",
+        options: [
+          "a. Ayer él hacia todos sus deberes mientras caminaba hacía la oficina.",
+          "b. Caminamos hacía la estación de trenes porque hacia mucho frío en la calle.",
+          "c. Cuando era niño, yo hacia muchas preguntas y caminaba hacía la escuela.",
+          "d. Cuando era niño, yo hacía muchas preguntas y caminaba hacia la escuela.",
+          "e. Hacía las cinco de la tarde llegará el avión que hacia escala en Madrid."
+        ],
+        correct: 3,
+        feedback: `
+          <strong>Gabarito: Letra d.</strong><br/>
+          • <strong>Por que a D está correta?</strong> <strong>Hacía</strong> (com acento no <em>í</em>) é o verbo <em>hacer</em> no pretérito imperfecto ("eu fazia muitas perguntas"), e <strong>hacia</strong> (sem acento) é a preposição de direção ("em direção à escola").<br/><br/>
+          <strong>Por que as outras estão erradas?</strong><br/>
+          • <strong>Erro na A:</strong> Faltou acento no verbo <em>*hacia deberes</em> (o certo é <strong>hacía</strong>) e sobrou acento na preposição <em>*hacía la oficina</em> (o certo é <strong>hacia</strong>).<br/>
+          • <strong>Erro na B:</strong> Sobrou acento na preposição <em>*hacía la estación</em> (<strong>hacia</strong>) e faltou acento no verbo <em>*hacia frío</em> (<strong>hacía</strong>).<br/>
+          • <strong>Erro na C:</strong> Faltou acento no verbo <em>*hacia preguntas</em> (<strong>hacía</strong>) e sobrou acento na preposição <em>*hacía la escuela</em> (<strong>hacia</strong>).<br/>
+          • <strong>Erro na E:</strong> Para hora aproximada ("por volta das 17h"), a preposição não leva acento: <strong>Hacia</strong> las cinco. Já o verbo "fazia escala" exige acento: <strong>hacía</strong> escala.
+        `
+      },
+      {
+        block: "Gramática",
+        question: "43. Señala la ÚNICA frase que utiliza <u>hasta</u> sin relación con el tiempo (con idea de inclusión o límite físico/espacial) y <u>hacia</u> con idea de tiempo aproximado:",
+        options: [
+          "a. Invitó a todos sus amigos, hasta a su vecino nuevo, y la fiesta terminará hacia las nueve.",
+          "b. Llegamos hasta la cima de la montaña y regresamos hasta el hotel antes del anochecer.",
+          "c. El examen durará hasta el mediodía en punto y después miró hasta el cielo despejado.",
+          "d. Llenó el vaso hasta el borde y caminó hacia la plaza principal del pueblo.",
+          "e. Llegaremos hacia las ocho de la noche y nos quedaremos hasta las diez."
+        ],
+        correct: 0,
+        feedback: `
+          <strong>Gabarito: Letra a.</strong><br/>
+          • <strong>Por que a A está correta?</strong> <em>Hasta a su vecino nuevo</em> usa <strong>hasta</strong> sem nenhuma relação com tempo, expressando <strong>inclusão</strong> (= "até mesmo / inclusive o vizinho novo"). Já <em>hacia las nueve</em> usa <strong>hacia</strong> para <strong>tempo aproximado</strong> (= "por volta das nove").<br/><br/>
+          <strong>Análise das outras alternativas (atenção aos usos não temporais de <em>hasta</em>!):</strong><br/>
+          • <strong>Por que a B está incorreta para o enunciado?</strong> A frase está gramaticalmente certa — os verbos <strong>llegar</strong> (<em>llegamos hasta la cima</em>) e <strong>regresar</strong> (<em>regresamos hasta el hotel</em>) usam <strong>hasta</strong> para limite no espaço (sem relação com tempo!) —, mas falta <em>hacia</em> de tempo aproximado.<br/>
+          • <strong>Erro na C:</strong> Além de usar <em>hasta</em> com tempo (<em>hasta el mediodía</em>), erra no final ao usar <em>*miró hasta el cielo</em> (olhar em direção ao céu pede <strong>hacia</strong>: <em>miró hacia el cielo</em>).<br/>
+          • <strong>Por que a D está incorreta para o enunciado?</strong> Também é uma frase correta — o verbo <strong>llenar</strong> (<em>llenó el vaso hasta el borde</em>) usa <strong>hasta</strong> como limite físico não temporal —, mas <em>hacia la plaza</em> indica direção espacial, não tempo aproximado.<br/>
+          • <strong>Por que a E está incorreta para o enunciado?</strong> Usa <em>hacia las ocho</em> (tempo aproximado), mas <em>hasta las diez</em> indica limite de <strong>tempo</strong>, não inclusão ou limite espacial.
+        `
+      },
+      {
+        block: "Gramática",
+        question: "44. Completa correctamente: '—¿Dónde dejaste <u>el periódico</u>, que no lo veo? —_____ dejé en el cajón del escritorio.'",
+        options: [
+          "a. La",
+          "b. Lo",
+          "c. Le",
+          "d. Los",
+          "e. Las"
+        ],
+        correct: 1,
+        feedback: "Correto! Letra <strong>b</strong>. <em>El periódico</em> é substantivo masculino singular e funciona como objeto direto do verbo <em>dejar</em> (quem deixa, deixa algo), portanto é substituído por <strong>lo</strong>."
+      },
+      {
+        block: "Gramática",
+        question: "45. Completa correctamente: '—¿Y <u>las peras</u>, ¿no _____ compraste? —No, no _____ traje porque estaban podridas.'",
+        options: [
+          "a. los / los",
+          "b. la / la",
+          "c. les / les",
+          "d. las / las",
+          "e. se / se"
+        ],
+        correct: 3,
+        feedback: "Correto! Letra <strong>d</strong>. <em>Las peras</em> é feminino plural e exerce função de objeto direto nos dois verbos (<em>comprar / traer</em>), sendo substituído por <strong>las</strong>."
+      },
+      {
+        block: "Gramática",
+        question: "46. Marca la opción CORRECTA respecto a la posición del pronombre de objeto directo en imperativo afirmativo:",
+        options: [
+          "a. ¿Debo comprar esta falda? —Claro, la compra.",
+          "b. ¿Debo comprar esta falda? —Claro, cómprala.",
+          "c. ¿Debo comprar esta falda? —Claro, compra la.",
+          "d. ¿Debo comprar esta falda? —Claro, cómpralo.",
+          "e. ¿Debo comprar esta falda? —Claro, le compra."
+        ],
+        correct: 1,
+        feedback: "Correto! Letra <strong>b</strong>. No imperativo afirmativo, o pronome vai obrigatoriamente <strong>depois e soldado</strong> ao verbo: <strong>cómprala</strong> (com acento para manter a sílaba tônica original). Como <em>la falda</em> é feminino singular, usa-se <strong>la</strong>."
+      },
+      {
+        block: "Gramática",
+        question: "47. En la frase: '—¿Has visto <u>el despegue del cohete</u>? —Sí, _____ he visto por tele.', el pronombre adecuado es:",
+        options: [
+          "a. la",
+          "b. le",
+          "c. los",
+          "d. las",
+          "e. lo"
+        ],
+        correct: 4,
+        feedback: "Correto! Letra <strong>e</strong>. O núcleo do objeto direto é <em>el despegue</em> (masculino singular), portanto substitui-se por <strong>lo</strong>."
+      },
+      {
+        block: "Gramática",
+        question: "48. Señala la alternativa que sustituye correctamente el objeto indirecto en: 'Compré un osito de peluche <u>para mi ahijado</u>.'",
+        options: [
+          "a. Le compré un osito de peluche.",
+          "b. Lo compré un osito de peluche.",
+          "c. La compré un osito de peluche.",
+          "d. Les compré un osito de peluche.",
+          "e. Se compré un osito de peluche."
+        ],
+        correct: 0,
+        feedback: "Correto! Letra <strong>a</strong>. <em>Para mi ahijado</em> indica o destinatário (objeto indireto de 3ª pessoa do singular), que é substituído por <strong>le</strong>. Só se usa <em>se</em> quando há outro pronome (<em>lo/la/los/las</em>) logo depois."
+      },
+      {
+        block: "Gramática",
+        question: "49. Señala la alternativa CORRECTA al sustituir los dos complementos en: 'Conté <u>todo el secreto</u> <u>a mis amigos</u>.'",
+        options: [
+          "a. Les lo conté.",
+          "b. Lo les conté.",
+          "c. Se lo conté.",
+          "d. Se la conté.",
+          "e. Me lo conté."
+        ],
+        correct: 2,
+        feedback: "Correto! Letra <strong>c</strong>. <em>A mis amigos</em> (O.I.) seria <strong>les</strong>, e <em>todo el secreto</em> (O.D.) é <strong>lo</strong>. Pela regra da eufonia em espanhol, <strong>les + lo</strong> transforma-se obrigatoriamente em <strong>se lo</strong>."
+      },
+      {
+        block: "Gramática",
+        question: "50. En cuál de las opciones el pronombre está correctamente posicionado con un verbo en gerundio y con un verbo en infinitivo:",
+        options: [
+          "a. Te siguiendo llegaré temprano y la escuchar me ayuda.",
+          "b. La escuchar no me hace bien y te seguir es fácil.",
+          "c. Tráigame un té y sigues te.",
+          "d. Siguiéndote llegaré temprano y escucharte me hace bien.",
+          "e. Me la tráiga por favor y la comprar quiero."
+        ],
+        correct: 3,
+        feedback: "Correto! Letra <strong>d</strong>. Tanto com gerúndio (<strong>Siguiéndote</strong>) quanto com infinitivo (<strong>escucharte</strong>), o pronome átono vai <strong>depois e soldado</strong> ao verbo (ênclise obrigatória)."
+      },
+      {
+        block: "Gramática",
+        question: "51. Señala la frase en la que el orden de los pronombres (C.I. + C.D.) es CORRECTO:",
+        options: [
+          "a. La me compré ayer.",
+          "b. Me la compré ayer.",
+          "c. Cómpralame ahora.",
+          "d. Lo te dije anoche.",
+          "e. La nos diste ayer."
+        ],
+        correct: 1,
+        feedback: "Correto! Letra <strong>b</strong>. Em espanhol, o complemento indireto (<strong>me</strong>) vem <strong>sempre antes</strong> do complemento direto (<strong>la</strong>): <strong>Me la compré</strong> (e no imperativo seria <em>Cómpramela</em>)."
+      },
+      {
+        block: "Gramática",
+        question: "52. Sobre los sustantivos que cambian de significado según el género, señala la opción CORRECTA:",
+        options: [
+          "a. El capital significa 'ciudad principal' y la capital significa 'dinero'.",
+          "b. El cometa es un juguete de papel y la cometa es un cuerpo celeste.",
+          "c. El cólera es la ira y la cólera es la enfermedad.",
+          "d. El cura es el padre de la iglesia y la cura es la solución de una enfermedad.",
+          "e. El frente es la parte del rostro y la frente es la fachada o parte del ejército."
+        ],
+        correct: 3,
+        feedback: "Correto! Letra <strong>d</strong>. <strong>El cura</strong> é o sacerdote/padre e <strong>la cura</strong> é o tratamento/cura de uma doença. Todas as outras alternativas inverteram os significados."
+      },
+      {
+        block: "Gramática",
+        question: "53. Marca la frase en la que el artículo concuerda con el significado correcto del sustantivo:",
+        options: [
+          "a. La cabeza de esta huelga es aquel hombre que está al lado del presidente.",
+          "b. El policía es la institución que protege la ciudad.",
+          "c. El pendiente de la oreja es de oro, pero la pendiente de la montaña es muy inclinada.",
+          "d. El orden religiosa tiene muchas reglas antiguas.",
+          "e. La pez nadaba felizmente en el río."
+        ],
+        correct: 2,
+        feedback: "Correto! Letra <strong>c</strong>. <strong>El pendiente</strong> (masculino) é o brinco e <strong>la pendiente</strong> (feminino) é a ladeira/declive. Nas outras: o líder é <em>el cabeza</em>; a instituição é <em>la policía</em>; a ordem religiosa é <em>la orden</em>; o animal aquático é <em>el pez</em>."
+      },
+      {
+        block: "Gramática",
+        question: "54. Elige la alternativa donde el significado de <u>el guía / la guía</u> y <u>el cometa / la cometa</u> está aplicado correctamente:",
+        options: [
+          "a. La guía turística era un señor muy amable y el cometa de papel voló con el viento.",
+          "b. El guía turístico nos ayudó en el museo y los niños volaron la cometa de papel en el parque.",
+          "c. Leí el guía telefónica para buscar el número de la oficina.",
+          "d. El astrónomo observó la cometa Halley pasando por el cielo nocturno.",
+          "e. El guía de papel está sobre el escritorio y la cometa pasó cerca del Sol."
+        ],
+        correct: 1,
+        feedback: "Correto! Letra <strong>b</strong>. <strong>El guía</strong> (masculino) é a pessoa que guia turistas, e <strong>la cometa</strong> (feminino) é o brinquedo (pipa). O livro/manual é <em>la guía</em> e o astro celeste é <em>el cometa</em>."
+      },
+      {
+        block: "Gramática",
+        question: "55. Marca la opción CORRECTA sobre el uso de <u>el frente / la frente</u> y <u>el barba / la barba</u>:",
+        options: [
+          "a. Se puso la mano en el frente porque tenía mucha fiebre.",
+          "b. El frente del rostro estaba muy caliente por el sol.",
+          "c. La barba es un actor joven que representa el papel de un anciano.",
+          "d. El barba es el pelo que crece en la cara y el mentón del hombre.",
+          "e. El soldado fue al frente de batalla, mientras el niño se tocó la frente."
+        ],
+        correct: 4,
+        feedback: "Correto! Letra <strong>e</strong>. <strong>El frente</strong> (masculino) é a linha de frente/fachada, enquanto <strong>la frente</strong> (feminino) é a testa. Já <em>la barba</em> são os pelos do rosto e <em>el barba</em> é o ator que faz papel de idoso."
+      }
+    ];
+
+    const topics = [
+      { id: "hotel", label: "El hotel", blockName: "Vocabulario: El hotel" },
+      { id: "oficina", label: "La oficina", blockName: "Vocabulario: La oficina" },
+      { id: "boda", label: "La boda", blockName: "Vocabulario: La boda" },
+      { id: "clima", label: "El clima", blockName: "Vocabulario: El clima" },
+      { id: "gramatica", label: "Gramática", blockName: "Gramática" }
+    ];
+
+    let currentIndex = 0;
+    let userSelections = Array(questions.length).fill(null);
+    let checkedQuestions = Array(questions.length).fill(false);
+
+    const introScreen = document.getElementById("intro-screen");
+    const startBtn = document.getElementById("start-btn");
+    const quizBadges = document.getElementById("quiz-badges");
+    const blockBadge = document.getElementById("block-badge");
+    const questionNav = document.getElementById("question-nav");
+    const topicTabs = document.getElementById("topic-tabs");
+    const topicQuestions = document.getElementById("topic-questions");
+    const questionArea = document.getElementById("question-area");
+    const feedbackBox = document.getElementById("feedback-box");
+    const prevBtn = document.getElementById("prev-btn");
+    const checkBtn = document.getElementById("check-btn");
+    const nextBtn = document.getElementById("next-btn");
+    const progressBadge = document.getElementById("progress-badge");
+    const scoreBadge = document.getElementById("score-badge");
+    const quizContainer = document.getElementById("quiz-container");
+    const resultScreen = document.getElementById("result-screen");
+    const finalScoreText = document.getElementById("final-score-text");
+    const finalMessage = document.getElementById("final-message");
+    const restartBtn = document.getElementById("restart-btn");
+
+    startBtn.addEventListener("click", () => {
+      introScreen.classList.add("hidden");
+      quizBadges.classList.remove("hidden");
+      questionNav.classList.remove("hidden");
+      quizContainer.classList.remove("hidden");
+      renderQuestion();
+    });
+
+    function calculateScore() {
+      let correctCount = 0;
+      for (let i = 0; i < questions.length; i++) {
+        if (checkedQuestions[i] && userSelections[i] === questions[i].correct) {
+          correctCount++;
+        }
+      }
+      return (correctCount / questions.length) * 10;
+    }
+
+    function updateScoreBadge() {
+      const score = calculateScore();
+      scoreBadge.textContent = `Nota: ${score.toFixed(1)} / 10`;
+    }
+
+    function renderNav() {
+      const currentBlock = questions[currentIndex].block;
+      topicTabs.innerHTML = "";
+      topicQuestions.innerHTML = "";
+
+      // Renderiza abas dos tópicos
+      topics.forEach((topic) => {
+        const topicIndices = questions
+          .map((q, idx) => (q.block === topic.blockName ? idx : -1))
+          .filter((idx) => idx !== -1);
+
+        const firstIdx = topicIndices[0];
+        const lastIdx = topicIndices[topicIndices.length - 1];
+        const isActiveTopic = topic.blockName === currentBlock;
+
+        const tabBtn = document.createElement("button");
+        tabBtn.textContent = `${topic.label} (${firstIdx + 1}-${lastIdx + 1})`;
+        tabBtn.onclick = () => {
+          currentIndex = firstIdx;
+          renderQuestion();
+        };
+
+        let tabClasses = "px-2.5 py-1 rounded-full text-xs font-bold border transition cursor-pointer ";
+        if (isActiveTopic) {
+          tabClasses += "bg-[#0284c7] text-white border-white shadow ";
+        } else {
+          tabClasses += "bg-slate-800/80 text-[#94a3b8] border-slate-600 hover:border-[#38bdf8] hover:text-white ";
+        }
+
+        tabBtn.className = tabClasses;
+        topicTabs.appendChild(tabBtn);
+      });
+
+      // Renderiza apenas as questões pertencentes ao tópico ativo
+      questions.forEach((q, idx) => {
+        if (q.block !== currentBlock) return;
+
+        const btn = document.createElement("button");
+        btn.textContent = idx + 1;
+        btn.onclick = () => {
+          currentIndex = idx;
+          renderQuestion();
+        };
+
+        let classes = "w-7 h-7 rounded-full text-xs font-bold border transition cursor-pointer flex items-center justify-center ";
+
+        if (idx === currentIndex) {
+          classes += "bg-[#38bdf8] text-slate-950 border-white scale-110 shadow ";
+        } else if (checkedQuestions[idx]) {
+          if (userSelections[idx] === questions[idx].correct) {
+            classes += "bg-emerald-500/30 text-emerald-200 border-emerald-400 ";
+          } else {
+            classes += "bg-rose-500/30 text-rose-200 border-rose-400 ";
+          }
+        } else if (userSelections[idx] !== null) {
+          classes += "bg-[#0284c7]/40 text-white border-[#38bdf8] ";
+        } else {
+          classes += "bg-slate-800/80 text-[#94a3b8] border-slate-600 hover:border-[#38bdf8] hover:text-white ";
+        }
+
+        btn.className = classes;
+        topicQuestions.appendChild(btn);
+      });
+    }
+
+    function renderQuestion() {
+      const q = questions[currentIndex];
+      const selectedIdx = userSelections[currentIndex];
+      const isChecked = checkedQuestions[currentIndex];
+
+      blockBadge.textContent = q.block;
+      progressBadge.textContent = `${currentIndex + 1} / ${questions.length}`;
+      prevBtn.disabled = currentIndex === 0;
+      checkBtn.disabled = isChecked || selectedIdx === null;
+      nextBtn.textContent = currentIndex === questions.length - 1 ? "Finalizar Quiz →" : "Next →";
+
+      renderNav();
+
+      let html = `<h2 class="text-base sm:text-lg font-bold text-[#f8f9fa] leading-snug">${q.question}</h2>`;
+      html += `<div class="space-y-2.5">`;
+
+      q.options.forEach((opt, idx) => {
+        let btnClasses = "option-btn w-full text-left px-4 py-3 rounded-full border-2 text-sm sm:text-base text-[#f8f9fa] ";
+
+        if (isChecked) {
+          if (idx === q.correct) {
+            btnClasses += "border-emerald-400 bg-emerald-500/20 font-bold ";
+          } else if (idx === selectedIdx && idx !== q.correct) {
+            btnClasses += "border-rose-400 bg-rose-500/20 ";
+          } else {
+            btnClasses += "border-white/20 bg-slate-800/50 opacity-60 ";
+          }
+        } else {
+          if (idx === selectedIdx) {
+            btnClasses += "border-[#38bdf8] bg-[#0284c7]/30 font-semibold cursor-pointer ";
+          } else {
+            btnClasses += "border-white/40 bg-slate-800/80 cursor-pointer ";
+          }
+        }
+
+        html += `
+          <button
+            onclick="selectOption(${idx})"
+            ${isChecked ? "disabled" : ""}
+            class="${btnClasses}"
+          >
+            ${opt}
+          </button>
+        `;
+      });
+
+      html += `</div>`;
+      questionArea.innerHTML = html;
+
+      if (isChecked) {
+        const isCorrect = selectedIdx === q.correct;
+        feedbackBox.className = isCorrect
+          ? "rounded-2xl p-4 border border-emerald-400/60 bg-emerald-950/50 text-sm sm:text-base leading-relaxed text-[#f8f9fa]"
+          : "rounded-2xl p-4 border border-rose-400/60 bg-rose-950/50 text-sm sm:text-base leading-relaxed text-[#f8f9fa]";
+        feedbackBox.innerHTML = q.feedback;
+        feedbackBox.classList.remove("hidden");
+      } else {
+        feedbackBox.classList.add("hidden");
+      }
+
+      updateScoreBadge();
+    }
+
+    window.selectOption = function (idx) {
+      if (checkedQuestions[currentIndex]) return;
+      userSelections[currentIndex] = idx;
+      renderQuestion();
+    };
+
+    checkBtn.addEventListener("click", () => {
+      if (userSelections[currentIndex] === null || checkedQuestions[currentIndex]) return;
+      checkedQuestions[currentIndex] = true;
+      renderQuestion();
+    });
+
+    prevBtn.addEventListener("click", () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        renderQuestion();
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (currentIndex < questions.length - 1) {
+        currentIndex++;
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    });
+
+    function showResults() {
+      questionNav.classList.add("hidden");
+      quizContainer.classList.add("hidden");
+      resultScreen.classList.remove("hidden");
+      const finalGrade = calculateScore();
+      finalScoreText.textContent = `${finalGrade.toFixed(1)} / 10.0`;
+
+      if (finalGrade >= 8) {
+        finalMessage.textContent = "¡Excelente! Você domina muito bem o vocabulário e as regras gramaticais em espanhol.";
+      } else if (finalGrade >= 6) {
+        finalMessage.textContent = "¡Buen trabajo! Vale a pena revisar alguns detalhes dos pronomes de objeto e dos substantivos que mudam de gênero.";
+      } else {
+        finalMessage.textContent = "¡Buen esfuerzo! Releia o resumo inicial com atenção e refaça o quiz para fixar melhor o conteúdo.";
+      }
+    }
+
+    restartBtn.addEventListener("click", () => {
+      currentIndex = 0;
+      userSelections = Array(questions.length).fill(null);
+      checkedQuestions = Array(questions.length).fill(false);
+      resultScreen.classList.add("hidden");
+      questionNav.classList.remove("hidden");
+      quizContainer.classList.remove("hidden");
+      renderQuestion();
+    });
+  </script>
+</body>
+</html>
